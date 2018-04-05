@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="uso-de-una-imagen-docker-para-el-desarrollo-de-las-practicas.html">
-<link rel="next" href="bash.html">
+<link rel="prev" href="preparacion.html">
+<link rel="next" href="la-linea-de-comandos-unix.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -176,17 +176,30 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="la-linea-de-comandos-unix" class="section level1">
-<h1><span class="header-section-number">1</span> La línea de comandos UNIX</h1>
-<p>Una interfaz de línea de comandos (en inglés, command-line interface, CLI) es un <strong>método</strong> que permite a los usuarios dar instrucciones a algún programa informático por medio de una línea de texto simple. Por otra parte un <em>shell</em> o intérprete de comandos es el programa que provee una interfaz de usuario para acceder a los servicios del sistema operativo, pudiendo ser esta una interfaz de línea de comandos</p> 
+<div id="uso-de-una-imagen-docker-para-el-desarrollo-de-las-practicas" class="section level2 unnumbered">
+<h2>Uso de una imagen Docker para el desarrollo de las prácticas</h2>
+<p>Dado que el objetivo de estas prácticas es adquirir unas nociones básicas que permitan desenvolverse con soltura en el análisis de secuencias genómicas, y que para ello es fundamental que se desarrolle en un entorno Linux con las dependencias instaladas, la mejor forma de llevarlas a cabo es mediante un contenedor de [Docker](<a href="https://es.wikipedia.org/wiki/Docker_(software)" class="uri">https://es.wikipedia.org/wiki/Docker_(software)</a>. Así, se ha diseñado una image de Docker que contiene todos los programas y datos necesarios para el desarrollo de estas prácticas y los alumnos sólo tienene que encargarse de instalar Docker en su sistema operativo</p>
+<div id="instalacion-de-docker" class="section level3 unnumbered">
+<h3>Instalación de Docker</h3>
+<p>Antes de nada deberías instalar Docker en tu ordenador, para ello sigue las instrucciones adecuadas para tu sistema operativo.</p>
+<p>Windows: <a href="https://docs.docker.com/docker-for-windows/install/#download-docker-for-windows" class="uri">https://docs.docker.com/docker-for-windows/install/#download-docker-for-windows</a></p>
+<p>Mac: <a href="https://docs.docker.com/docker-for-mac/install/" class="uri">https://docs.docker.com/docker-for-mac/install/</a></p>
 </div>
+<div id="ejecutar-el-contenedor-docker-del-curso" class="section level3 unnumbered">
+<h3>Ejecutar el contenedor Docker del curso</h3>
+<p>Ejecutamos docker desde un directorio/carpeta local que utilizaremos para guardar los resultados que obtengamos.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">docker</span> run -ti -v <span class="va">$PWD</span>:/home/user/workdir anpefi/genomica-marina</code></pre></div>
+
+</div>
+</div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="uso-de-una-imagen-docker-para-el-desarrollo-de-las-practicas.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="bash.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="preparacion.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="la-linea-de-comandos-unix.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

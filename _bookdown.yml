@@ -1,1 +1,20 @@
+book_filename: genomica
+rep: https://github.com/anpefi/MIBM-Genomica-Marina
 output_dir: "docs"
+delete_merged_file: true
+language:
+  label:
+    fig: 'Figura '
+    tab: 'Tabla '
+    eq: 'Equación '
+    thm: 'Teorema '
+    lem: 'Lema '
+    cor: 'Corolario '
+    prp: 'Proposición '
+    cnj: 'Conjetura '
+    def: 'Definición '
+    exm: 'Ejemplo '
+    exr: 'Ejercicio '
+    proof: 'Prueba '
+    remark: 'Remark. '
+    solution: 'Solución. '

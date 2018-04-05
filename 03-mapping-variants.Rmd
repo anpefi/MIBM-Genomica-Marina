@@ -1,0 +1,15 @@
+# Mapeado
+
+## Formato SAM
+
+## Formato BAM
+
+## Mapear
+
+# Obtención de elementos genómicos
+
+# SAMtools y BEDtools
+
+# Herramientas para el alineamiento y detección de variantes en secuencias genómicas
+
+# Obtención de variantes

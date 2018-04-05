@@ -191,10 +191,11 @@ Por tanto, si ahora tecleamos (Para salir de la página del manual presiona la t
 ls -a
 ```
 
-> **Pregunta**
->
-> 1. ¿Cual es la diferencia con el resultado que nos daba antes?
-> 
+```{exercise}
+¿Cual es la diferencia con el resultado que nos daba antes?
+```
+
+<br>
 
 Otra cosa que nos indica el manual de ls en DESCRIPTION es que `List information about the FILEs (the current directory by default).  Sort entries alphabetically if none of -cftuvSUX nor --sort is specified.` Por tanto, si no incluímos un argumento de FILE, nos está devolviendo, por defecto, el contenido del directorio actual, que si hemos lanzado el contendor docker correctamente, nos mostrará el contenido de nuestro directorio local desde el que lo hemos lanzado. Si queremos que nos devuelva el contenido de cualquier otro directorio tenemos que añadir el nombre del directorio como argumento
 
@@ -213,12 +214,14 @@ Por último, para finalizar con los argumentos, tambien podemos añadir varios a
 ls -larth . data
 ```
 
-> **Preguntas**
->
-> 1. En este ejemplo, ¿qué es lo que nos muestra el comando?¿Qué significa -larth?
-> 
-> 2. Repite el comando pero usando rutas absolutas ¿Hay alguna diferencia?
->  
+```{exercise}
+En este ejemplo, ¿qué es lo que nos muestra el comando?¿Qué significa -larth?
+```
+
+<br>
+```{exercise} 
+Repite el comando pero usando rutas absolutas ¿Hay alguna diferencia?
+```  
 
 ### cd
 
@@ -232,11 +235,11 @@ nos moverá al directorio home. Si te fijas, en el prompt (ese mensaje delante d
 
 Si estamos escribiendo una ruta de un archivo, siempre podemos usar la tabulación para autocompletar, si no hay ambiguedad, el nombre del siguiente elemento de la jerarquía. Así, si estamos tecleando `cd /home/u` y pulsamos la tecla \<TAB> el comando se auto completará a `cd /home/user/` y si volvemos a dar a \<TAB> nos mostrará todos los archivos y directorios para escribir algún caracter que provoque la desambiguación. Este autocompletado es enormemente útil y se aplica cuando usamos archivos como argumento en cualquier comando.
 
-> **Pregunta**
-> 
-> 1. ¿Cómo volvemos al directorio anterior?
-> 
+```{exercise}
+¿Cómo volvemos al directorio anterior?
+```
 
+<br>
 ### echo
 
 echo simplemente muestra una línea de texto
@@ -279,10 +282,9 @@ podemos comprobar que ha creado un archivo vacio llamado touched_file. En realid
 
 _**r**e**m**ove_ sirve para borrar archivos (y directorios, aunque no por defecto). Y aquí borrar significa borrar, no enviar a una "papelera de reciclaje" como en otros sistemas gráficos. Por tanto se debe usar con cuidado y responsabilidad.
 
-> **Ejercicio**
-> 
-> 1. Consulta el manual de rm y borra los directorios nivelX que hemos creado antes con un solo comando
-> 
+```{exercise}
+Consulta el manual de rm y borra los directorios nivelX que hemos creado antes con un solo comando
+```
 
 ### Un inciso: sustitución de nombres de archivo
 
@@ -318,14 +320,65 @@ cp ~/example1/original ~/copia
 cp ~/example1/*.txt ~
 ```
 
-> **Preguntas**
->
-> 1. ¿Dónde ha creado el fichero copia del primer comando cp?
-> 
-> 2. ¿Qué significa el segundo comando cp?¿Cuantos archivos copia?¿Qué nombre les asigna?
->
-> 3. ¿Cómo copiaríamos el directorio example1 a unos llamado example2?
->
+```{exercise}
+¿Dónde ha creado el fichero copia del primer comando cp?
+```
+
+<br>
+```{exercise}
+¿Qué significa el segundo comando cp?¿Cuantos archivos copia?¿Qué nombre les asigna?
+```
+
+<br>
+```{exercise}
+¿Cómo copiaríamos el directorio example1 a unos llamado example2?
+```
+
+### mv
+
+Este comando  mueve archivos (_**m**o**v**e_), con lo que el archivo que 
+especifiquemos como destino **sustituirá** al de origen. Vamos a mover el archivo 
+original del directorio example1 a un directorio temporal que crearemos
+
+```bash
+mkdir ~/temp
+mv ~/example1/original ~/temp/original
+ls ~/example1
+ls ~/example2
+```
+
+Como vemos, el archivo original ya no esta en example1 si no en `temp`. El comando 
+mv se suele usar mucho para **renombrar archivos** que es el proceso de moverlo 
+a otro nombre. Por ejemplo podemos renombrar el archivo de antes
+
+```bash
+mv ~/temp/original ~/temp/renombrado
+```
+
+Como se ve, se puede mover dentro del mismo directorio, no es necesario que se 
+mueva a diferentes directorios, siempre y cuando le demos otro nombre. Desde el 
+punto de vista bioinformático es muy importante destacar que `mv` no equivale a 
+un `cp` + un `rm` y que al hacer un move no estamos duplicando el contenido del 
+archivo (técnicamente solo cambia el índice que indica en que sectores del disco 
+está y cual es su nombre/ruta). Esto es vital saberlo cuando trabajamos con 
+archivos grandes ya que si copiamos un archivo grande (digamos de 50GB) estamos 
+duplicando el espacio utilizado en disco, además de estar utilizando un tiempo 
+considerable para el proceso de copia (el archivo se está replicando entero en 
+otra parte del disco). Sin embargo si movemos el archivo, el contenido este no 
+se está escribiendo en ningún otro sitio del disco con lo cual nunca ocupará más 
+espacio y el proceso es inmediato. Por lo tanto tened en cuenta esto cuando penséis 
+en copiar archivos grandes, ya que generalmente no es necesario y podemos gestionar 
+mejor el asunto con mv o con links simbólicos.
+
+### less/more
+
+Ya sabemos como movernos por directorios, crear y borrar archivos, copiarlos, etc. 
+Ahora exploraremos como ver el contenido de un archivo y navegar por él. 
+
+### cat
+
+### wc
+
 
 ### El editor de texto nano
 
@@ -363,6 +416,16 @@ cortar el texto marcado. Usa Ctrl+U para pegarlo.
 
 Buscar una palabra es fácil, simplemente presiona Ctrl+W e introduce el
 término a buscar. Para buscar el mismo término otra vez, presione Alt+W.
+
+```{exercise}
+Crea, usando nano, un archivo en ~/workdir llamado reyes.txt y escribe en él una lista de los últimos 4 reyes de España que recuerdes, con un nombre en cada línea. Guárdalo y sal de nano
+```
+
+### grep
+
+## Pipes
+
+## Analisis de datos básico con la Shell
 
 ## Bibliografía
 

@@ -1,0 +1,17 @@
+bookdown::gitbook:
+  dev: svglite
+  split_by: section
+  config:
+    toc:
+      collapse: subsection
+      before: |
+        <li><a href="./">Análisis Bioinformático NGS</a></li>
+      after: |
+        <li><a href="http://anpefi.eu/">Andrés Pérez Figueroa</a></li>
+    sharing:
+      github: yes
+      facebook: yes
+      twitter: yes
+    search: yes
+  download: ["pdf"]
+url: http\://anpefi.eu/MIBM-Genomica-Marina

@@ -51,78 +51,62 @@ administradores, sepan donde encontrar lo que buscan. A continuacion
 teneis una lista con los directorios mas importantes del sistema y para
 que se usan.
 
-#### /bin/
+/bin
+: Comandos/programas binarios esenciales (cp, mv, ls, rm, etc.).
 
-Comandos/programas binarios esenciales (cp, mv, ls, rm, etc.).
+/boot 
+: Ficheros utilizados durante el arranque del sistema.
 
-#### /boot/
-
-Ficheros utilizados durante el arranque del sistema.
-
-#### /dev/
-
-Dispositivos esenciales, discos duros, terminales, sonido, video,
+/dev
+: Dispositivos esenciales, discos duros, terminales, sonido, video,
 lectores dvd/cd, etc.
 
-#### /etc/
-
-Ficheros de configuración utilizados en todo el sistema y que son
+/etc
+: Ficheros de configuración utilizados en todo el sistema y que son
 específicos del ordenador.
 
-#### /home/
+/home
+: Directorios personales de inicio de los usuarios. Generalmente, como usuarios, sólo trabajaremos en nuestro directorio personal dentro de este /home
 
-Directorios personales de inicio de los usuarios. Generalmente, como usuarios, sólo trabajaremos en nuestro directorio personal dentro de este /home
-
-#### /lib/
-
-Bibliotecas compartidas esenciales para los binarios de /bin/, /sbin/ y
+/lib
+: Bibliotecas compartidas esenciales para los binarios de /bin/, /sbin/ y
 el núcleo del sistema.
 
-#### /mnt/
+/mnt
+: Sistemas montados temporalmente
 
-Sistemas montados temporalmente
+/media
+: Puntos de montaje para dispositivos de medios como unidades lectoras de
+discos compactos.  {-}
 
-#### /media/
-
-Puntos de montaje para dispositivos de medios como unidades lectoras de
-discos compactos.
-
-#### /opt/
-
-Paquetes de aplicaciones estáticas. En el cluster, este directorio se
+/opt
+: Paquetes de aplicaciones estáticas. En el cluster, este directorio se
 encuentra montado sobre el head, para albergar una serie de aplicaciones
 de uso para todos los nodos.
 
-#### /proc/
+/proc
+: Sistema de ficheros virtual que documenta sucesos y estados del núcleo.
 
-Sistema de ficheros virtual que documenta sucesos y estados del núcleo.
+/root
+: Directorio de inicio del usuario root (super-usuario).
 
-#### /root/
+/sbin
+: Comandos/programas binarios de administración de sistema.
 
-Directorio de inicio del usuario root (super-usuario).
+/tmp
+: Ficheros temporales.
 
-#### /sbin/
+/srv
+: Datos específicos de sitio servidos por el sistema.
 
-Comandos/programas binarios de administración de sistema.
-
-#### /tmp/
-
-Ficheros temporales.
-
-#### /srv/
-
-Datos específicos de sitio servidos por el sistema.
-
-#### /usr/
-
-Jerarquía secundaria para datos compartidos de solo lectura (Unix system
+/usr
+: Jerarquía secundaria para datos compartidos de solo lectura (Unix system
 resources). Este directorio puede ser compartido por múltiples
 ordenadores y no debe contener datos específicos del ordenador que los
 comparte.
 
-#### /var/
-
-Ficheros variables, como son logs, bases de datos, directorio raíz de
+/var
+: Ficheros variables, como son logs, bases de datos, directorio raíz de
 servidores HTTP y FTP, colas de correo, ficheros temporales, etc.
 
 ### Nombres de archivos en Linux
@@ -207,9 +191,10 @@ Por tanto, si ahora tecleamos (Para salir de la página del manual presiona la t
 ls -a
 ```
 
-### **Preguntas**
-
-1. ¿Cual es la diferencia con el resultado que nos daba antes?
+> **Pregunta**
+>
+> 1. ¿Cual es la diferencia con el resultado que nos daba antes?
+> 
 
 Otra cosa que nos indica el manual de ls en DESCRIPTION es que `List information about the FILEs (the current directory by default).  Sort entries alphabetically if none of -cftuvSUX nor --sort is specified.` Por tanto, si no incluímos un argumento de FILE, nos está devolviendo, por defecto, el contenido del directorio actual, que si hemos lanzado el contendor docker correctamente, nos mostrará el contenido de nuestro directorio local desde el que lo hemos lanzado. Si queremos que nos devuelva el contenido de cualquier otro directorio tenemos que añadir el nombre del directorio como argumento
 
@@ -228,13 +213,14 @@ Por último, para finalizar con los argumentos, tambien podemos añadir varios a
 ls -larth . data
 ```
 
-### **Preguntas**
+> **Preguntas**
+>
+> 1. En este ejemplo, ¿qué es lo que nos muestra el comando?¿Qué significa -larth?
+> 
+> 2. Repite el comando pero usando rutas absolutas ¿Hay alguna diferencia?
+>  
 
-1. En este ejemplo, ¿qué es lo que nos muestra el comando?¿Qué significa -larth?
-
-1. Repite el comando pero usando rutas absolutas ¿Hay alguna diferencia?
-
-## cd
+### cd
 
 cd viene de **c**hange **d**irectory y, por tanto, nos permite cambiar el directorio actual a cualquier otro dado por su ruta absoluta o relativa.
 
@@ -246,11 +232,12 @@ nos moverá al directorio home. Si te fijas, en el prompt (ese mensaje delante d
 
 Si estamos escribiendo una ruta de un archivo, siempre podemos usar la tabulación para autocompletar, si no hay ambiguedad, el nombre del siguiente elemento de la jerarquía. Así, si estamos tecleando `cd /home/u` y pulsamos la tecla \<TAB> el comando se auto completará a `cd /home/user/` y si volvemos a dar a \<TAB> nos mostrará todos los archivos y directorios para escribir algún caracter que provoque la desambiguación. Este autocompletado es enormemente útil y se aplica cuando usamos archivos como argumento en cualquier comando.
 
-### **Preguntas**
+> **Pregunta**
+> 
+> 1. ¿Cómo volvemos al directorio anterior?
+> 
 
-1. ¿Cómo volvemos al directorio anterior?
-
-## echo
+### echo
 
 echo simplemente muestra una línea de texto
 
@@ -266,7 +253,7 @@ echo $PATH
 
 lo que hace es mostrarnos el valor guardado en la variable PATH (para mostrarla la antecedemos con el signo $). La variable PATH es una importante variable de entorno (Variables del sistema que afectan a todos los programas) que nos muestra una lista (separada por :) de las rutas en las que el sistema va a buscar un ejecutable cuando escribimos un comando. Si en esos directorios no se encuentra el archivo ejecutable nos dará un error si intentamos ejecutarlo sólo con su nombre. Si un ejecutable no está en uno de los directorios del PATH, lo podremos ejecutar llamándolo pr su ruta relativa o absoluta (Nota: si está en el directorio actual la ruta relativa debe incluir este como `./`, por ejemplo `./miprograma`).
 
-## mkdir
+### mkdir
 
 Otro comado sencillo pero imprescindible es mkdir (_**m**a**k**e **dir**ectory_) que nos permite crear directorios. Creemos, por ejemplo, un directorio que usaremos como directorio de trabajo
 
@@ -277,7 +264,7 @@ mkdir workdir
 
 Una opción interensate de mkdir, que podemos ver en su página de manual, es la de hacer directorios intermedios si estos no existe. Imagina que estamos en /home/user/wordir, que está vacio, y queremos crear un directorio nivel3, dentro de otro nivel2 a su vez dentro de uno llamado nivel1. O sea queremos crear el directorio /home/user/workdir/nivel1/nivel2/nivel3. No es necesario ir creando cada directorio y moviéndonos a él (con cd) crear el siguiente, podemos hacerlo todo de una vez con `mkdir -p /home/user/workdir/nivel1/nivel2/nivel3` o, dado que estamos en /home/user/workdir usando la ruta relativa `mkdir -p nivel1/nivel2/nivel3`
 
-## touch
+### touch
 
 De forma similar a mkdir, touch nos permite crear o actualizar archivos. Si ejecutamos
 
@@ -288,15 +275,16 @@ ls -la touched_file
 
 podemos comprobar que ha creado un archivo vacio llamado touched_file. En realidad, touch lo que hace es cambiar el *timestamp* del archivo y si no existe lo crea.
 
-## rm
+### rm
 
 _**r**e**m**ove_ sirve para borrar archivos (y directorios, aunque no por defecto). Y aquí borrar significa borrar, no enviar a una "papelera de reciclaje" como en otros sistemas gráficos. Por tanto se debe usar con cuidado y responsabilidad.
 
-### **Ejercicio**
+> **Ejercicio**
+> 
+> 1. Consulta el manual de rm y borra los directorios nivelX que hemos creado antes con un solo comando
+> 
 
-1. Consulta el manual de rm y borra los directorios nivelX que hemos creado antes con un solo comando
-
-## Un inciso: sustitución de nombres de archivo
+### Un inciso: sustitución de nombres de archivo
 
 Muchos comandos toman como argumentos nombres de archivo como argumento. Estos se pueden citar literalmente uno a uno o bien se pueden especificar de forma genérica. Existen unos caracteres especiales que permiten fabricar expresiones utilizadas como modelos de nombre de archivo.
 
@@ -321,22 +309,25 @@ ls example1/*mpl*
 rm example1/*.txt
 ```
 
-## cp
+### cp
 
-_**c**o**p**y_. Este comando copia un archivo manteniendo el original
+Este comando copia (_**c**o**p**y_) un archivo manteniendo el original
 
 ```bash
 cp ~/example1/original ~/copia
 cp ~/example1/*.txt ~
 ```
 
-### Preguntas
+> **Preguntas**
+>
+> 1. ¿Dónde ha creado el fichero copia del primer comando cp?
+> 
+> 2. ¿Qué significa el segundo comando cp?¿Cuantos archivos copia?¿Qué nombre les asigna?
+>
+> 3. ¿Cómo copiaríamos el directorio example1 a unos llamado example2?
+>
 
-1. ¿Dónde ha creado el fichero copia del primer comando cp?
-2. ¿Qué significa el segundo comando cp?¿Cuantos archivos copia?¿Qué nombre les asigna?
-3. ¿Cómo copiaríamos el directorio example1 a unos llamado example2?
-
-## El editor de texto nano
+### El editor de texto nano
 
 Existen muchos editores de texto para línea de comandos (emacs, vi/vim, joe, ..) pero voy
 a comentaros como usar `nano`, que es un editor muy sencillo, fácil de

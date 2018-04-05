@@ -1,0 +1,384 @@
+# La línea de comandos UNIX
+
+Una interfaz de línea de comandos (en inglés, command-line interface, CLI) es un **método** que permite a los usuarios dar instrucciones a algún programa informático por medio de una línea de texto simple. Por otra parte un *shell* o intérprete de comandos es el programa que provee una interfaz de usuario para acceder a los servicios del sistema operativo, pudiendo ser esta una interfaz de línea de comandos
+
+## Bash
+
+Bash es un programa informático, cuya función consiste en interpretar órdenes. Es una shell de Unix y el intérprete de comandos por defecto en la mayoría de las distribuciones GNU/Linux, además de macOS. También se ha llevado a otros sistemas como Windows y Android. Incorpora características tales como control de procesos, redirección de entrada/salida, listado y lectura de ficheros, protección, comunicaciones y un lenguaje de órdenes para escribir programas por lotes o “scripts”. Su nombre es un acrónimo de Bourne-again shell ("shell Bourne otra vez") haciendo un juego de palabras (born-again significa "nacido de nuevo") sobre la Bourne shell (sh), que fue uno de los primeros intérpretes importantes de Unix.
+
+## ¿Por qué usar una Shell?
+
+Hay diferentes motivos para usar una shell en bioinformática y es que generalmente seremos, a la larga, más eficientes en la mayor parte de tareas si trabajamos en una interfaz de línea de comandos que si lo hacemos en una interfaz gŕafica. Estos son algunos de los motivos:
+
+- Tenemos caracteristicas de los lenguages de programación (como loops o variables)
+- Los comandos que ejecutamos se pueden empaquetar en scripts, y estos combinar en pipelines
+- Autocompletado
+- Guarda el historial de comandos ejecutados
+- Permite el acceso fácil y estándar a servidores remotos
+- Consume menos memoria y permite gestionar archivos enormes que no se pueden abrir en una GUI
+- Con algo de práctica es más rápido teclear los comandos que mover el raton en la pantalla para hacer click en diferentes zonas
+- Permite el uso de expresiones regulares lo que facilita las operaciones repetitivas
+
+La línea de comandos nos proporciona una representación palabra a palabra de una serie de acciones que son explícitas, distribuíbles, repetibles y automatizables. La capacidad de expresas acciones con palabras (comandos) nos permite encadenar esas acciones de la foma más apropiada ara cada problema. Por otra parte, ejecutar herramientas en la línea de comandos requiere de un aprendizaje adiciona y un conocimiento en más profunidad de cómo funcionan los ordenadores. Sin embargo aprender a desenvolverse en la línea de comandos (y en la programación en general) no es simplemente aprender una serie de conceptos, si no que es un aprendizaje a pensar de cierto modo, descomponiendo los problemas en pasos muy simples que puedan ser fácilmente resueltos.
+
+## ¿Cuales son los conocimientos mínimos que debería adquirir sobre la Shell?
+
+1. Navegación a través del árbol de directorios
+
+1. Como acceder a archivos localizados en directorios y explorar su conteido
+
+1. Encontrar documentación acerca de los comandos (`man`)
+
+1. Aprender sobre los argumentos que usan los programas y como especificarlos
+
+1. Redirección y *piping*, cómo encadenar la salida de un programa para que sea la entrada de otro
+
+## Consideraciones sobre los sistemas Linux/Unix
+
+### El sistema de archivos
+
+La estructura de directorios que sigue Linux es parecida a la de
+cualquier UNIX. No tenemos una “unidad” para cada unidad física de disco
+o partición como en Windows, sino que todos los discos duros o de red se
+montan bajo un sistema de directorios en árbol, y algunos de esos
+directorios enlazan con estas unidades físicas de disco. Básicamente, todo el contenido está organizado en ficheros dentro de un directorio, que a su ver puede ser parte de otro directorio superior, y así hasta que llegamos al directorio raiz (representado como `/`). En Unix, cada nivel de la jerarquia está separado por un /. Así, si encontramos que un archivo tiene la ruta /home/andres/archivo.txt significa que es un archivo llamado archivo.txt que está en el directorio andres que a su vez está en el directorio home que a su vez está en el directorio raíz (el / del principio). Eso es lo que se conoce como la ruta absoluta (*absolute path*). Por otra parte podemos referirnos a un archivo por su ruta relativa (*relative path*) al directorio actual. Imaginemos que estamos en el directorio /home, entonces podemos dar la ruta relativa al archivo anterior como andres/archivo.txt (Nota como no hay / al principio).
+
+### Directorios estándar
+
+En los sistemas UNIX existe un ’Estándar de jerarquía de ficheros’ (FHS - Filesystem Hierarchy Standard) que intenta definir unas bases, para
+que tanto los programas del sistema, como los usuarios y
+administradores, sepan donde encontrar lo que buscan. A continuacion
+teneis una lista con los directorios mas importantes del sistema y para
+que se usan.
+
+#### /bin/
+
+Comandos/programas binarios esenciales (cp, mv, ls, rm, etc.).
+
+#### /boot/
+
+Ficheros utilizados durante el arranque del sistema.
+
+#### /dev/
+
+Dispositivos esenciales, discos duros, terminales, sonido, video,
+lectores dvd/cd, etc.
+
+#### /etc/
+
+Ficheros de configuración utilizados en todo el sistema y que son
+específicos del ordenador.
+
+#### /home/
+
+Directorios personales de inicio de los usuarios. Generalmente, como usuarios, sólo trabajaremos en nuestro directorio personal dentro de este /home
+
+#### /lib/
+
+Bibliotecas compartidas esenciales para los binarios de /bin/, /sbin/ y
+el núcleo del sistema.
+
+#### /mnt/
+
+Sistemas montados temporalmente
+
+#### /media/
+
+Puntos de montaje para dispositivos de medios como unidades lectoras de
+discos compactos.
+
+#### /opt/
+
+Paquetes de aplicaciones estáticas. En el cluster, este directorio se
+encuentra montado sobre el head, para albergar una serie de aplicaciones
+de uso para todos los nodos.
+
+#### /proc/
+
+Sistema de ficheros virtual que documenta sucesos y estados del núcleo.
+
+#### /root/
+
+Directorio de inicio del usuario root (super-usuario).
+
+#### /sbin/
+
+Comandos/programas binarios de administración de sistema.
+
+#### /tmp/
+
+Ficheros temporales.
+
+#### /srv/
+
+Datos específicos de sitio servidos por el sistema.
+
+#### /usr/
+
+Jerarquía secundaria para datos compartidos de solo lectura (Unix system
+resources). Este directorio puede ser compartido por múltiples
+ordenadores y no debe contener datos específicos del ordenador que los
+comparte.
+
+#### /var/
+
+Ficheros variables, como son logs, bases de datos, directorio raíz de
+servidores HTTP y FTP, colas de correo, ficheros temporales, etc.
+
+### Nombres de archivos en Linux
+
+Los nombres de archivos en Linux (como en todos los UNIX) distinguen
+mayúsculas de minúsculas, esto es, son “case sensitive”. Los archivos
+README, readme, REadme y rEadme por ejemplo son archivos distintos y por
+lo tanto al ser nombres distintos pueden estar en el mismo directorio.
+
+En Linux los archivos no tienen por qué tener una extensión. La suelen
+tener a modo orientativo, pero no es en absoluto necesario. Linux sabe
+qué contiene cada archivo independientemente de cuál sea su extensión.
+Por comodidad, podremos llamar a todos nuestros archivos de texto con la
+extensión .texto, o a todos nuestros documentos con la extensión
+.documento, de esta manera, podremos luego agruparlos más fácilmente.
+
+Los ficheros y directorios ocultos en Linux comienzan su nombre por un
+punto (.)
+
+Los nombres de archivos o directorios pueden ser muy largos, de más de
+200 caracteres, lo cual nos da bastante flexibilidad para asociar el
+nombre de un archivo a lo que contiene. No obstante, hay ciertos
+caracteres que nunca se deberían utilizar a la hora de nombrar un
+archivo. Uno de ellos es el espacio, nunca llamaremos a un fichero con
+un nombre que contenga un espacio. Tampoco son recomendados otros
+caracteres raros como signos de puntuación (a excepción del punto),
+acentos o la ñ. En algunos casos Linux ni siquiera nos permitirá
+usarlos. Los recomendables son las letras A-Z, a-z, los números (0-9),
+el punto, el guión (-) y el guión bajo (\_) para nombrar un archivo. Los
+acentos y la ñ tampoco se recomiendan.
+
+### Permisos de archivos y directorios
+
+En Linux, todo archivo y directorio (*nota: los directorios son, a efectos técnicos, un tipo especial de archivo*) tiene tres niveles de permisos de
+acceso: los que se aplican al propietario del archivo, los que se
+aplican al grupo que tiene el archivo y los que se aplican a todos los
+usuarios del sistema. Podemos ver los permisos cuando listamos un
+directorio con ls -l:
+
+    andres@head:~/curso$ ls -l
+    total 212
+    -rwxr--r-- 1 andres users 46801 2009-10-29 16:26 a.out
+    -rw-r--r-- 1 andres users  1629 2009-10-29 16:26 poblacion.c
+    drwxr-xr-x 2 andres users  4096 2010-10-02 18:30 prueba
+    -rwxr-xr-x 1 andres users 47740 2009-10-29 18:05 rec
+    -rw-r--r-- 1 andres users   711 2009-10-29 16:26 varianza.c
+
+Veamos por partes el listado, tomando como ejemplo la primera línea. La
+primera columna (-rwxr-xr–) es el tipo de archivo y sus permisos, la
+siguiente columna (1) es el número de enlaces al archivo, la tercera
+columna (andres) representa al propietario del archivo, la cuarta
+columna (users) representa al grupo al que pertence al archivo y las
+siguientes son el tamaño, la fecha y hora de última modificación y por
+último el nombre delarchivo o directorio.
+
+## Comandos básicos
+
+Vamos a practicar sobre la marcha algunos de los comandos en bash más utizados y útiles. Para ello, abrimos el contenedor Docker de este curso y en la terminal ejecutaremos los comandos que iremos explicando a continuación.
+
+### ls
+
+Para empezar un comando muy sencillo que simplemente le pide al sistema operativo que nos de un **l**i**s**tado del contenido de un directorio
+
+```bash
+ls
+```
+
+Aquí simplemente hemos escrito el nombre del comando y este nos devuelve por pantalla (salida estándar, *standard output*) una lista de archivos y directorios. Esta es la interacción más básica, ya que sólo hemos usado el nombre del comando y no le hemos dado argumentos para precisar más lo que queremos de él.
+
+### man
+
+En sistemas UNIX generalmente los comandos (que son realmente programas ejecutables) suelen venir con una completa documentación que se puede consultar en la terminal mediante el comando `man` (acrónimo de manual). Las páginas de manual son muy importantes ya que nos indican, entre otras cosas, cuales son los argumentos que acepta un comando. Podemos ver cuales son las opciones del comando `ls` viendo su página del manual:
+
+```bash
+man ls
+```
+
+Esto nos muestra una completa página de información sobre el comando ls. Por ejemplo nos indica en la SYNOPSIS que la manera de llamar al comando es `ls [OPTION]... [FILE]...` Eso significa que al comando ls le podemos añadir **argumentos** opcionales (al estar indicados entre corchetes indica que son opcionales, como no hay ningún argumento obligatorio hemos podido usar el comando anteriormente sin argumentos) y de dos tipos, opciones y ficheros. Las argumentos de opciones se pueden dar en formato corto (-) o formato largo (--). Por ejemplo `ls -a` es lo mismo que `ls --all` y lo que viene a decir es que nos mostrará el contenido completo del directorio (mostrando los archivos ocultos, que empienzan por ".").
+Por tanto, si ahora tecleamos (Para salir de la página del manual presiona la tecla "q")
+
+```bash
+ls -a
+```
+
+### **Preguntas**
+
+1. ¿Cual es la diferencia con el resultado que nos daba antes?
+
+Otra cosa que nos indica el manual de ls en DESCRIPTION es que `List information about the FILEs (the current directory by default).  Sort entries alphabetically if none of -cftuvSUX nor --sort is specified.` Por tanto, si no incluímos un argumento de FILE, nos está devolviendo, por defecto, el contenido del directorio actual, que si hemos lanzado el contendor docker correctamente, nos mostrará el contenido de nuestro directorio local desde el que lo hemos lanzado. Si queremos que nos devuelva el contenido de cualquier otro directorio tenemos que añadir el nombre del directorio como argumento
+
+```bash
+ls -a data
+```
+
+Esto nos devuelve el contenido del directorio data. 
+
+Los puntos supensivos tras el [OPTION] o el [FILE] nos indican que podemos añadir varios argumentos del mismo tipo. Además, en el caso de las opciones, si usamos los argumentos cortos podemos combinarlos, por ejemplo `ls -a -s home` es lo mismo que `ls -as home` o que usando los argumentos largos `ls --all --size home` (nota la diferencia entre -as, argumentos cortos combinados, y --all, argumento largo, que no se pueden combinar).
+Una cosa importante en la anterior salida es que aparecen listados dos directorios especiales `.` y `..` que hacen referencia al directorio actual y al directorio anterior (*parental directory*) respectivamente. Esa notación la podemos usar siempre y por ejemplo `ls .` listará el contenido del directorio actual.
+
+Por último, para finalizar con los argumentos, tambien podemos añadir varios argumentos del tipo FILE. Por ejemplo, es muy habitual usar la opción -l (que devuelve información sobre los permisos, fecha y tamaño de los archivos), y podemos usarlo para varios directorios en una sola llamada:
+
+```bash
+ls -larth . data
+```
+
+### **Preguntas**
+
+1. En este ejemplo, ¿qué es lo que nos muestra el comando?¿Qué significa -larth?
+
+1. Repite el comando pero usando rutas absolutas ¿Hay alguna diferencia?
+
+## cd
+
+cd viene de **c**hange **d**irectory y, por tanto, nos permite cambiar el directorio actual a cualquier otro dado por su ruta absoluta o relativa.
+
+```bash
+cd data
+```
+
+nos moverá al directorio home. Si te fijas, en el prompt (ese mensaje delante de donde escribimos los mensajes) aparecerá ahora `:~/data#`. Si hacemos ls, nos mostrará el contenido de data, no el del directorio /home/user como antes. Otra forma de saber en que directorio nos encontramos es mediante el comando `pwd` (_**p**ath to **w**orking **d**irectory_) que nos devolverá la ruta absoluta del directorio actual. Una forma rápida de vovler a nuestro directorio home (/home/user) es utilizar `~` como sinónimo, así `cd ~` nos devuelve al directorio home. Aún más rápido es usar `cd` sin argumentos, que nos devuelve al directorio home.
+
+Si estamos escribiendo una ruta de un archivo, siempre podemos usar la tabulación para autocompletar, si no hay ambiguedad, el nombre del siguiente elemento de la jerarquía. Así, si estamos tecleando `cd /home/u` y pulsamos la tecla \<TAB> el comando se auto completará a `cd /home/user/` y si volvemos a dar a \<TAB> nos mostrará todos los archivos y directorios para escribir algún caracter que provoque la desambiguación. Este autocompletado es enormemente útil y se aplica cuando usamos archivos como argumento en cualquier comando.
+
+### **Preguntas**
+
+1. ¿Cómo volvemos al directorio anterior?
+
+## echo
+
+echo simplemente muestra una línea de texto
+
+```bash
+echo Hola, colega
+```
+
+A bote pronto puede parecer un comando innecesario ya que simplemente escribe lo que le decimos, pero resulta muy útil cuando lo usamos de un modo programático, por ejemplo en un script o para mostrar el valor de ciertas variables. Así
+
+```bash
+echo $PATH
+```
+
+lo que hace es mostrarnos el valor guardado en la variable PATH (para mostrarla la antecedemos con el signo $). La variable PATH es una importante variable de entorno (Variables del sistema que afectan a todos los programas) que nos muestra una lista (separada por :) de las rutas en las que el sistema va a buscar un ejecutable cuando escribimos un comando. Si en esos directorios no se encuentra el archivo ejecutable nos dará un error si intentamos ejecutarlo sólo con su nombre. Si un ejecutable no está en uno de los directorios del PATH, lo podremos ejecutar llamándolo pr su ruta relativa o absoluta (Nota: si está en el directorio actual la ruta relativa debe incluir este como `./`, por ejemplo `./miprograma`).
+
+## mkdir
+
+Otro comado sencillo pero imprescindible es mkdir (_**m**a**k**e **dir**ectory_) que nos permite crear directorios. Creemos, por ejemplo, un directorio que usaremos como directorio de trabajo
+
+```bash
+cd
+mkdir workdir
+```
+
+Una opción interensate de mkdir, que podemos ver en su página de manual, es la de hacer directorios intermedios si estos no existe. Imagina que estamos en /home/user/wordir, que está vacio, y queremos crear un directorio nivel3, dentro de otro nivel2 a su vez dentro de uno llamado nivel1. O sea queremos crear el directorio /home/user/workdir/nivel1/nivel2/nivel3. No es necesario ir creando cada directorio y moviéndonos a él (con cd) crear el siguiente, podemos hacerlo todo de una vez con `mkdir -p /home/user/workdir/nivel1/nivel2/nivel3` o, dado que estamos en /home/user/workdir usando la ruta relativa `mkdir -p nivel1/nivel2/nivel3`
+
+## touch
+
+De forma similar a mkdir, touch nos permite crear o actualizar archivos. Si ejecutamos
+
+```bash
+touch touched_file
+ls -la touched_file
+```
+
+podemos comprobar que ha creado un archivo vacio llamado touched_file. En realidad, touch lo que hace es cambiar el *timestamp* del archivo y si no existe lo crea.
+
+## rm
+
+_**r**e**m**ove_ sirve para borrar archivos (y directorios, aunque no por defecto). Y aquí borrar significa borrar, no enviar a una "papelera de reciclaje" como en otros sistemas gráficos. Por tanto se debe usar con cuidado y responsabilidad.
+
+### **Ejercicio**
+
+1. Consulta el manual de rm y borra los directorios nivelX que hemos creado antes con un solo comando
+
+## Un inciso: sustitución de nombres de archivo
+
+Muchos comandos toman como argumentos nombres de archivo como argumento. Estos se pueden citar literalmente uno a uno o bien se pueden especificar de forma genérica. Existen unos caracteres especiales que permiten fabricar expresiones utilizadas como modelos de nombre de archivo.
+
+- El carácter **\***. El asterisco representa un conjunto de caracteres cualquiera.
+
+- El carácter **?**. El interrogante representa un único carácter cualquiera
+
+- Los caracteres **[]**. Los corchetes permiten especificar la lista de caracteres que se esperan en una posición concreta del nombre de archivo. Dentro de esta lista se pueden usar intervalos (por ejemplo `[a-z]` para especificar cualquier minúscula) o el concepto de negación (representado por **!**, como en `[!a-z] para especificar que esa posición no sea una minúscula).
+
+Veamos unos ejemplos
+
+```bash
+# Volvemos al home
+cd
+# Listamos el contenido del directorio example1
+ls example1
+# queremos ver solo los archivos de ejemplo, que se llaman file_example_1 y file_ejemplo_1.txt
+# Para ello usamos la expresión *mpl* que significa cualquiere grupo de caracteres seguido por mpl y otroe grupo cualquiera de caracteres
+ls example1/*mpl*
+
+#Ahora queremos borrar todos los archivos txt
+rm example1/*.txt
+```
+
+## cp
+
+_**c**o**p**y_. Este comando copia un archivo manteniendo el original
+
+```bash
+cp ~/example1/original ~/copia
+cp ~/example1/*.txt ~
+```
+
+### Preguntas
+
+1. ¿Dónde ha creado el fichero copia del primer comando cp?
+2. ¿Qué significa el segundo comando cp?¿Cuantos archivos copia?¿Qué nombre les asigna?
+3. ¿Cómo copiaríamos el directorio example1 a unos llamado example2?
+
+## El editor de texto nano
+
+Existen muchos editores de texto para línea de comandos (emacs, vi/vim, joe, ..) pero voy
+a comentaros como usar `nano`, que es un editor muy sencillo, fácil de
+usar y que cubrirá nuestras necesidades de edición rápida de archivos
+dentro de la línea de comandos.
+
+Para abrir un archivo (o crearlo si es que no existe) simplemente teclea
+`nano <nombre_archivo>` y se abrirá una interfaz de edición. Ahora ya
+puedes editar el archivo, moviéndote con las teclas de cursor. En la
+parte inferior de la pantalla te muestra los atajos de teclas. Si deseas
+guardar las modificaciones hechas, presiona Ctrl+O. Para salir de nano,
+presiona Ctrl+X. Si has pedido salir de un fichero modificado, te
+preguntará si lo deseas salvar. Presiona N si no quieres salvar el
+fichero o Y en caso que si quieras. Entonces te pedirá un nombre para el
+fichero, escríbelo y presiona Enter.
+
+Si por error presionas que quieres guardar el fichero, no te preocupes
+porque podemos cancelar presionando Ctrl+C, siempre que estés en la
+pantalla donde se escribe el nombre del fichero.
+
+Para cortar una sola línea, usa Ctrl+K. La línea desaparecerá. Para
+pegarla, sencillamente mueve el cursor a donde quieras pegar el texto y
+presiona Ctrl+U. La línea reaparece. Para mover varias línea, córtalas
+presionando Ctrl+K varias veces y luego pégalas pulsando Ctrl+U una sola
+vez. El párrafo completo aparecerá donde quiera.
+
+Si necesitas un control un poco más fino, entonces debes marcar el
+texto. Mueve el cursor al comienzo del texto que quieres cortar.
+Presiona Ctrl+6 (o Alt+A). Ahora mueve el cursor hasta el final del
+texto que quiere cortar: el texto debe quedar resaltado. Si quieres
+cancelar, sencillamente presione Ctrl+6 nuevamente. Pulsa `^K` para
+cortar el texto marcado. Usa Ctrl+U para pegarlo.
+
+Buscar una palabra es fácil, simplemente presiona Ctrl+W e introduce el
+término a buscar. Para buscar el mismo término otra vez, presione Alt+W.
+
+## Bibliografía
+
+- [El Arte del Terminal](https://github.com/jlevy/the-art-of-command-line/blob/master/README-es.md)
+
+-[Data Science at the Command Line](https://www.datascienceatthecommandline.com/)
+
+- [Bash One-liners for Bioinformatics](https://github.com/stephenturner/oneliners)
+
+- [Linux Cheat Sheet](https://github.com/widdowquinn/Teaching-IBioIC-Intro-to-Bioinformatics/blob/ff2665f19822698f04d375e38964f92bcfdef202/linux_notes/1-LinuxCheatSheet.pdf)

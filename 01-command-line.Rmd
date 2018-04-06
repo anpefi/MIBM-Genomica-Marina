@@ -427,11 +427,15 @@ Crea, usando nano, un archivo en ~/workdir llamado reyes.txt y escribe en él un
 
 ## Analisis de datos básico con la Shell
 
+## Otras consideraciones importantes
+
 ## Bibliografía
 
 - [El Arte del Terminal](https://github.com/jlevy/the-art-of-command-line/blob/master/README-es.md)
 
--[Data Science at the Command Line](https://www.datascienceatthecommandline.com/)
+- [Data Science at the Command Line](https://www.datascienceatthecommandline.com/)
+
+- [The Biostar Handbook: A Beginner's Guide to Bioinformatics](https://www.biostarhandbook.com)
 
 - [Bash One-liners for Bioinformatics](https://github.com/stephenturner/oneliners)
 

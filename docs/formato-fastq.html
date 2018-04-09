@@ -25,7 +25,7 @@
 <meta name="author" content="Andrés Pérez-Figueroa">
 
 
-<meta name="date" content="2018-04-06">
+<meta name="date" content="2018-04-09">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -193,6 +193,11 @@ GATTTGGGGTTCAAAGCAGTATCGATCAAATAGTAAATCCATTTGTTCAACTCACAGTTT
 +
 !&#39;&#39;*((((***+))%%%++)(%%%%).1***-+*&#39;&#39;))**55CCF&gt;&gt;&gt;&gt;&gt;&gt;CCCCCCC65</code></pre>
 <p>La primera línea, que empieza con una @ es el identificador de secuencia. La segunda línea consiste en la secuencia de nucleótidos en si misma. La tercera línea empieza con un carácter ‘+’ y, opcionalmente, puede ir seguida del mismo identificador de secuencia de la primera línea. Finalmente, la cuarta línea codifica los valores de calidad de la secuencia de la segunda línea, y debe contener el mismo número de caracteres que esta.</p>
+<p>El la línea que codifica la calidad encontramos una serie de caracteres <a href="https://ascii.cl/">ASCII</a> en los que cada uno representa un valor decimal de calidad, el <em>Phred score</em> (entre 0 y 40), algo que veremos en el siguiente apartado. Ordenados de menor a mayor estos son los caracteres ASCII usados para representar calidad en FASTQ:</p>
+<pre class="txt"><code>!&quot;#$%&amp;&#39;()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHI
+|    |    |    |    |    |    |    |    |   
+0....5...10...15...20...25...30...35...40</code></pre>
+<p>Dependiendo del tipo y versión de plataforma de secuenciación se toman diferentes caracteres :</p>
 </div>
             </section>
 
@@ -242,6 +247,19 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

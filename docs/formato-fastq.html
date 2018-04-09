@@ -186,7 +186,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
             <section class="normal" id="section-">
 <div id="formato-fastq" class="section level2">
 <h2><span class="header-section-number">2.3</span> Formato FASTQ</h2>
-<p>El formato FASTQ es el estándar de facto por el cual todos los instrumentos de secuenciación representan datos. Puede ser pensado como una variante del formato FASTA que le permite asociar una medida de calidad a cada secuencia base (FASTa con Qualities). En términos más simples, es un formato en el que para cada base, asociamos una medida de confiabilidad: la base es A y la probabilidad de que estemos equivocados es 1/1000. Conceptualmente, el formato es muy similar al FASTA pero sufre de aún más defectos que el formato FASTA.</p>
+<p>El formato FASTQ es el estándar de facto que usan los secuenciadores NGS para exponer las lecturas. Puede ser pensado como una variante del formato FASTA que le permite asociar una medida de calidad a cada secuencia base (FASTa con Qualities). En términos más simples, es un formato en el que para cada base, asociamos una medida de confiabilidad: la base es A y la probabilidad de que estemos equivocados es 1/1000. Conceptualmente, el formato es muy similar al FASTA pero sufre de aún más defectos que el formato FASTA.</p>
+<p>Cada secuencia en un archivo FASTQ consiste de 4 líneas</p>
+<pre class="txt"><code>@SEQ_ID
+GATTTGGGGTTCAAAGCAGTATCGATCAAATAGTAAATCCATTTGTTCAACTCACAGTTT
++
+!&#39;&#39;*((((***+))%%%++)(%%%%).1***-+*&#39;&#39;))**55CCF&gt;&gt;&gt;&gt;&gt;&gt;CCCCCCC65</code></pre>
+<p>La primera línea, que empieza con una @ es el identificador de secuencia. La segunda línea consiste en la secuencia de nucleótidos en si misma. La tercera línea empieza con un carácter ‘+’ y, opcionalmente, puede ir seguida del mismo identificador de secuencia de la primera línea. Finalmente, la cuarta línea codifica los valores de calidad de la secuencia de la segunda línea, y debe contener el mismo número de caracteres que esta.</p>
 </div>
             </section>
 

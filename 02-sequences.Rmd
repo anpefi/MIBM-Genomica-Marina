@@ -24,23 +24,67 @@ AGTCGATCAGTCGATCGTAGCTACGTACGACTACATTAGCGCCGCTCG-GCGCGGCGGCCATAT
 En la secuencia anterior, ¿cuales son todos los carácteres presentes y que significan?
 ```
 
-```{exrecise}
+<br>
+```{exercise}
 Examina el archivo ~/data/example.fa ¿a qué tipo molécula corresponden las secuencias?¿cuantas secuencias diferentes hay en el archivo?
 ```
 
+<br>
 Sin embargo la simplicidad del formato FASTA y la falta de reglas estrictas pueden ser un problema cuando se usan en diferentes programas, ya que estos podrían no gestionar bien archivos FASTA con secuencias muy largas, con alfabetos extendidos, con líneas de diferente tamaño o con diferencias entre mayúsculas y minúsculas. Es por ello que hay que leer bien la documentación del programa que usaremos para analizar nuestras secuencias FASTA.
 
 ## Formato FASTQ
 
-El formato FASTQ es el estándar de facto por el cual todos los instrumentos de 
-secuenciación representan datos. Puede ser pensado como una variante del formato 
+El formato FASTQ es el estándar de facto que usan los secuenciadores NGS para
+exponer las lecturas. Puede ser pensado como una variante del formato 
 FASTA que le permite asociar una medida de calidad a cada secuencia base (FASTa 
 con Qualities). En términos más simples, es un formato en el que para cada base, 
 asociamos una medida de confiabilidad: la base es A y la probabilidad de que 
 estemos equivocados es 1/1000. Conceptualmente, el formato es muy similar al 
 FASTA pero sufre de aún más defectos que el formato FASTA. 
 
+Cada secuencia en un archivo FASTQ consiste de 4 líneas
+
+```txt
+@SEQ_ID
+GATTTGGGGTTCAAAGCAGTATCGATCAAATAGTAAATCCATTTGTTCAACTCACAGTTT
++
+!''*((((***+))%%%++)(%%%%).1***-+*''))**55CCF>>>>>>CCCCCCC65
+```
+
+La primera línea, que empieza con una @ es el identificador de secuencia. La segunda
+línea consiste en la secuencia de nucleótidos en si misma. La tercera línea empieza
+con un carácter '+' y, opcionalmente, puede ir seguida del mismo identificador 
+de secuencia de la primera línea. Finalmente, la cuarta línea codifica los valores 
+de calidad de la secuencia de la segunda línea, y debe contener el mismo número 
+de caracteres que esta. 
+
+El la línea que codifica la calidad encontramos una serie de caracteres 
+[ASCII](https://ascii.cl/) en los que cada uno representa un valor decimal de 
+calidad, el *Phred score* (entre 0 y 40), algo que veremos en el siguiente apartado. Ordenados 
+de menor a mayor estos son los caracteres ASCII usados para representar calidad 
+en FASTQ:
+
+```txt
+!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHI
+|    |	  |	   |	|	 |	  |	   |    |	
+0....5...10...15...20...25...30...35...40
+```
+Dependiendo del tipo y versión de plataforma de secuenciación se toman diferentes 
+caracteres :
+
+
 ## Base Quality scores
+
+El *Phred score* _**Q**_ se usa para calcular la probabilidad de una base sea asignada
+de forma incorrecta mediante la fórmula $$P=10^-Q/10$$. Esto se resume en
+
+Q	|			Error				|	Accuracy
+---|---|---
+0	|			1	en	1			|	0%
+10	|			1	en	10			|	90%
+20	|			1	en	100			|	99%
+30	|			1	en	1000		|	99.9%
+40	|			1	en	10,000		|	99.99%
 
 # Procesado de lecturas NGS
 

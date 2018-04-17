@@ -25,7 +25,7 @@ La línea de comandos nos proporciona una representación palabra a palabra de u
 
 1. Navegación a través del árbol de directorios
 
-1. Como acceder a archivos localizados en directorios y explorar su conteido
+1. Como acceder a archivos localizados en directorios y explorar su contenido
 
 1. Encontrar documentación acerca de los comandos (`man`)
 
@@ -373,12 +373,30 @@ mejor el asunto con mv o con links simbólicos.
 ### less/more
 
 Ya sabemos como movernos por directorios, crear y borrar archivos, copiarlos, etc. 
-Ahora exploraremos como ver el contenido de un archivo y navegar por él. 
+Ahora exploraremos como ver el contenido de un archivo y navegar por él. Tanto `less`
+como `more` son visores de archivo (sólo permiten ver el contenido, no editarlo) 
+con paginación. Esto es útil para navegar por archivos grandes.
 
 ### cat
 
+cat es otro visor de archivos, pero a diferencia de more o less, cat muestra todo
+el contenido del archivo de un tirón. Por tanto no parece un comando muy útil para
+trabajar con archivos grandes (de hecho es peligroso, ya que puede colgarnos durante 
+un buen tiempo mientras hace el scrolling de todo el fichero), pero tiene una utilidad 
+grande cuando trabajos con pipes (como veremos más adelante)
+
+### head/tail 
+
+Otros visores muy útiles ya que permiten visaulizar las primeras (head) o las últimas (líneas).
+Por defecto nos muestra las 10 primeras/últimas líneas, pero tienen una serie de opciones
+que nos permiten operaciones muy útiles.
+
 ### wc
 
+Este comando se usa para contar el número de líneas, palabras o caracteres de un
+archivo. Esto es muy útil para conocer cuanta información tiene un archivo, por 
+ejemplo si tenemos un archivo de texto con una lista de genes, cada uno en una línea,
+podemos saber cuantos son exáctamente con `wc -l <nombre de archivo>`
 
 ### El editor de texto nano
 
@@ -421,13 +439,315 @@ término a buscar. Para buscar el mismo término otra vez, presione Alt+W.
 Crea, usando nano, un archivo en ~/workdir llamado reyes.txt y escribe en él una lista de los últimos 4 reyes de España que recuerdes, con un nombre en cada línea. Guárdalo y sal de nano
 ```
 
+<br>
+```{exercise}
+muestra el contenido de reyes.txt sin posibilidad de editarlo
+```
+
 ### grep
 
-## Pipes
+Este es uno de los comandos más útiles a la hora de trabajar con grandes ficheros de texto. 
+Grep permite buscar texto dentro de archivos. Básicamente toma una expresión regular, la busca en una serie de archivos e imprime las líneas completas que contengan la expresión regular buscada. Por ejemplo, podemos buscar las líneas de todos los archivos de texto que contienen el nombre Felipe:
+
+```bash
+grep "Felipe" *.txt
+```
+Esto devolverá la línea `Felipe VI` del archivo reyes.txt
+
+```{exercise}
+Pídele (con la ayuda de man) al comando grep que muestre sólo el nombre del archivo donde ecuentre la cadena "Felipe"
+```
+
+<br>
+```{exercise}
+Pídele al comando grep que muestre la línea donde aparece "Felipe" y la línea inmediatamente posterior
+```
+
+### Redirecciones
+
+Una utilidad importante, a estas alturas, de los comandos unix es la redirección de las salidas o entradas estándar.
+La salida estándar, lo que un comando muestra como resultado, está asociada por defecto a la terminal, pero podemos 
+redireccionarla para que el resultado lo guarde en un archivo en vez de msotrarlo en la terminal. 
+El comando de redirección de la salida estándar a archivo es `>` con lo que si el archivo no existe, se crea, y si existe se sobreescribe.
+El comando `>>` permite la concatenación, así si el archivo ya existe no lo sobreescribe, si no que añade el resultado al final.
+
+```bash
+echo punto_1 > puntos.txt
+cat puntos.txt
+echo punto_2 > puntos.txt
+cat puntos.txt
+echo punto_2 >> puntos.txt
+cat puntos.txt
+```
+
+Tambien existe la posibilidad de redireccionar la salida de error (los mensajes de error) con `2>` o  `2>>`; o de redireccionar la entrada con `<` o de combinar varias de estas redirecciones (p.e. a veces es útil que un comando no nos muestre nada por pantalla: `comando 1> resultados.txt 2> /dev/null`
+
+### cut
+
+Sirve para recuperar (cortar) caracteres o campos de una línea
+
+```bash
+cut -c1-3 reyes.txt #Devuelve los tres primeros caracteres de cada línea
+cut -c2,6 reyes.txt #Devuelve el segundo y sexto carateres de cada línea
+cut -d' ' -f1 reyes.txt
+```
+
+```{exercise}
+¿Qué devuelve el último comando?¿Por qué?
+```
+
+### sort
+
+Creamos con nano un archivo llamado cartas.txt con este contenido.
+
+```txt
+sota
+caballo
+rey
+rey
+caballo
+sota
+```
+
+Ahora podemos ordenarlas con sort:
+
+```bash
+sort cartas.txt > cartas_ordenadas.txt
+cat cartas_ordenadas.txt
+```
+
+### uniq
+
+Este comando permite eliminar/mostrar/contar las líneas repetidas de un archivo.
+**Solamente porcesa las líneas idénticas que son consecutivas** por eso se suele combinar
+con sort. Tomemos como ejemplo el fichero cartas.txt que hemos creado antes.
+
+```bash
+uniq cartas.txt
+uniq -c cartas.txt
+uniq -d cartas.txt
+```
+
+```{exercise}
+¿Qué ha pasado en cada uno de los comandos anteriores?
+```
+
+Ahora hacemos lo mismo para el archivo ordenado con sort:
+
+```bash
+uniq cartas_ordenadas.txt
+uniq -c cartas_ordenadas.txt
+uniq -d cartas_ordenadas.txt
+```
+
+```{exercise}
+¿Qué diferencia hay con el ejemplo anterior?
+```
+
+
+## Descargar contenido online con wget
+
+Una tarea que repite en muchas ocasiones es la de descargar ficheros. Esto también
+se puede hacer desde línea de comandos con wget (u otros comandos como curl, ftp, sftp, rsync que
+pueden ser más adecuados en algunas ocasiones). Lo único que necesitamos es una URL
+del archivo a descargar (que se puede obtener con el navegador mediante click derecho y "copiar url").
+
+Vamos a descargar un archivo con las anotaciones genómicas de *Crassotrea gigas* que podemos encontrar
+en el NCBI. 
+
+```bash
+cd ~/workdir #para asegurarnos que estamos en el directorio de trabajo
+wget -O oyster.gff.gz ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/297/895/GCF_000297895.1_oyster_v9/GCF_000297895.1_oyster_v9_genomic.gff.gz
+ls -larth
+```
+
+## Pipelines
+
+Los pipelines o tuberías son secuencias de procesos encadenados juntos mediante 
+sus entradas y salidas estándar, de tal manera que la salida de un proceso se 
+toma directamente como entrada en el proceso siguiente. Esto se implemente mediante
+el carácter `|` y lo que hace básicamente es conectar dos comandos de unix. Un ejemplo:
+
+```bash
+cat reyes.txt | grep "Alfonso" | wc -l 
+```
+
+```{exercise}
+¿Qué devuelve ese pipeline?¿Qué significa el valor que devuelve?
+```
+
+## Compresión de archivos
+
+En bioinformática encontraremos ficheros enormes que generalmente tendrán que venir comprimidos.
+Un archivo comprimido contiene la misma información que el archivo sin comprimir pero ha sido
+optimizado para su tamaño. Sin embargo necesita ser descomprimido para acceder a su contenido
+
+Por ejemplo, si intentamos hacer un head del fichero que descargamos anteriormente:
+
+```bash
+head oyster.gff.gz
+```
+
+Resulta que no entendemos nada. Necesitamos descomprimir su contenido (con gunzip, 
+ya que su extensión es .gz) pero podemos hacerlo "*on the fly*" para agunos formatos
+(como el gz)
+
+```bash
+head oyster.gff.gz | head
+```
+
+Y hay algunos comandos y programas que nos permiten trabajar directamente con los 
+archivos comprimidos (ya que ellos hacen la descompresión internamente). Un ejemplo
+es `less`
+
+```bash
+less oyster.gff.gz
+```
+
+La compresión requiere muchos más recursos computacionales que la descompresión. 
+Siempre es más rápido restaurar un archivo desde una forma comprimida que crear esa
+forma comprimida. Se pueden comprimir archivos individuales (.gz, .bz, bz2 o zip) o
+directorios completos (.tar.gz, .tar.bz2, ...)
 
 ## Analisis de datos básico con la Shell
 
+Con los elementos que ya tenemos podemos hacer un análisis básico mediante comandos
+de la shell. Cojamos como referencia el archivo oyster.gff.gz que descargamos antes.
+Se trata de un archivo de anotaciones genómicas para *Crassotrea gigas* en formato gff
+comprimido. Ya veremos en más detalle este formato, pero por ahora nos interesa que fila
+describe a una secuencia y que en la
+tercera columna contiene información acerca de las *feature* (si esas secuencias representa
+un gen, un exon, un intron, una CDS,...).
+
+Vamos a intentar averiguar cuantos features hay de cada tipo.
+
+Primero descomprimimos el archivo
+
+```bash
+ls -larth
+gunzip oyster.gff
+ls -larth
+```
+Observamos que al descomprimirlo se ha borrado el archivo comprimido, y que descomprimido ocupa mucho más.
+
+```{exercise}
+¿Cuantas líneas contiene el archivo?
+```
+
+Ahora examinamos las primeras líneas
+
+```bash
+cat oyster.gff | head
+```
+
+Vemos que hay líneas que comienzan con # que son comentarios y no nos dan información. Vamos a filtrarlas
+
+```bash 
+cat oyster.gff | grep -v -e "^#" |  head
+```
+
+```{exercise}
+¿qué significan los argumentos de grep en la instrucción anterior?
+```
+
+Para evitar que terminos como "gene" o "exon" que puedan aparecer en otras columnas, vamos a quedarnos sólo con la tercera columna que es la que sabemos que contiene las features y es lo que queremos saber
+
+```bash
+cat oyster.gff | grep -v -e "^#" | cut -f3 |  head
+```
+
+Ahora ya tenemos una sóla columna con los tipos de features, podemos usar sort y
+uniq para que nos digan cuantas hay de cada tipo
+
+```bash
+cat oyster.gff | grep -v -e "^#" | cut -f3 |  sort | uniq -c | sort
+```
+Y así tenemos los datos que queríamos, usando solamente comandos del shell.
+
+```{exercise}
+Intentad obtener la misma tabla mediante Excel o similar ¿Cuanto más se tarda?
+```
+
+
+## Shell scripting
+
+Los scripts no son más que unos archivos que combinan diferentes comandos y pipelines
+con el fin de automatizarlos. En su formato más simple consisten en una serie de comandos
+escritos en líneas de texto. Por ejemplo consideremos el siguiente script guardado
+en el archivo `hello.sh`
+
+```bash
+#!/bin/bash
+# comment
+echo Hello World
+```
+
+La primera línea es de tipo especial y nos indica que shell debe usar (en este caso bash). 
+La segunda línea, como va precedida de un "#" nos indica que es un comentario, no
+se va a ejecutar. Es muy importante comentar todos los pasos en un script.
+La tercera línea ya es un comando que se va a ejecutar.
+
+Para ejecutar el script primero le damos permiso de ejecución `chmod +x hello.sh` y luego
+lo podemos ejecutar llamándolo por su ruta relativa (o la completa):
+
+```bash
+./hello.sh
+```
+
+Ahora podemos escribir un script que automatize un análisis como el que hemos hecho
+antes para las features de *Crassotrea gigas* y guardarlo en un fichero oyster_features.sh
+
+```bash
+#!/bin/bash
+# script para el análisis de features del genoma de Crassostrea gigas
+
+#Creamos un nuevo directorio para este análisis
+cd ~/workdir
+mkdir oyster
+cd oyster
+
+#Obtención de los datos
+wget -O oyster.gff.gz ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/297/895/GCF_000297895.1_oyster_v9/GCF_000297895.1_oyster_v9_genomic.gff.gz
+
+#Descomprimimos
+gunzip oyster.gff.gz
+
+#Obtenemos la tabla de features
+cat oyster.gff | grep -v -e "^#" | cut -f3 |  sort | uniq -c | sort
+```
+
+Ahora podemos correr ese script, pero en vez de que nos muestre la tabla de features,
+que nos la guarde en un fichero llamado oyster_features.txt
+
+```
+cd ~/workdir
+chmod +x oyster_features.sh
+./oyster_features.sh > oyster_features.txt
+```
+
+Ahora ya tenemos nuestro análisis básico totalmente automatizado en un script. Tiene
+la ventaja de que es fácilmente editable para hacer lo mismo con otros ficheros de datos.
+
+```{exercise}
+Modifica el script para hacer el mismo análisis en *Anguilla anguilla* (busca el gff en https://www.ncbi.nlm.nih.gov/genome/10841?genome_assembly_id=59496).
+¿Cual es el resultado?¿Qué ha podido pasar?
+```
+
+
+
 ## Otras consideraciones importantes
+
+Hay una serie de temas y conceptos, que por motivos de tiempo no podemos hablar
+en profundidad en este curso, pero que suponen un conocimiento transversal importante
+para el día a día en el análisis bioinformático.
+
+- Otros comandos útiles (sed, cut, sort, uniq,
+- Expresiones regulares
+- Conexión a terminales remotas (ssh, sftp,...)
+- Gestión de trabajos en sistemas de colas (slurm, sge, ...)
+- Nociones de programación (bash, python, R, ...)
+- Reproducibilidad y comunicación (markdown, Jupyter)
+- Control de versiones (git)
 
 ## Bibliografía
 

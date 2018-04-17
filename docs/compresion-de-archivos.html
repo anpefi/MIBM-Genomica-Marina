@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="herramientas-para-el-alineamiento-y-deteccion-de-variantes-en-secuencias-genomicas.html">
-<link rel="next" href="bibliografia-general.html">
+<link rel="prev" href="pipelines.html">
+<link rel="next" href="analisis-de-datos-basico-con-la-shell.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -192,17 +192,24 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="obtencion-de-variantes" class="section level1">
-<h1><span class="header-section-number">9</span> Obtención de variantes</h1>
-
+<div id="compresion-de-archivos" class="section level2">
+<h2><span class="header-section-number">1.8</span> Compresión de archivos</h2>
+<p>En bioinformática encontraremos ficheros enormes que generalmente tendrán que venir comprimidos. Un archivo comprimido contiene la misma información que el archivo sin comprimir pero ha sido optimizado para su tamaño. Sin embargo necesita ser descomprimido para acceder a su contenido</p>
+<p>Por ejemplo, si intentamos hacer un head del fichero que descargamos anteriormente:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">head</span> oyster.gff.gz</code></pre></div>
+<p>Resulta que no entendemos nada. Necesitamos descomprimir su contenido (con gunzip, ya que su extensión es .gz) pero podemos hacerlo “<em>on the fly</em>” para agunos formatos (como el gz)</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">head</span> oyster.gff.gz <span class="kw">|</span> <span class="fu">head</span></code></pre></div>
+<p>Y hay algunos comandos y programas que nos permiten trabajar directamente con los archivos comprimidos (ya que ellos hacen la descompresión internamente). Un ejemplo es <code>less</code></p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">less</span> oyster.gff.gz</code></pre></div>
+<p>La compresión requiere muchos más recursos computacionales que la descompresión. Siempre es más rápido restaurar un archivo desde una forma comprimida que crear esa forma comprimida. Se pueden comprimir archivos individuales (.gz, .bz, bz2 o zip) o directorios completos (.tar.gz, .tar.bz2, …)</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="herramientas-para-el-alineamiento-y-deteccion-de-variantes-en-secuencias-genomicas.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="bibliografia-general.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="pipelines.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="analisis-de-datos-basico-con-la-shell.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

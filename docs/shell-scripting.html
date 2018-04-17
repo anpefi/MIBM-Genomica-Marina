@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="herramientas-para-el-alineamiento-y-deteccion-de-variantes-en-secuencias-genomicas.html">
-<link rel="next" href="bibliografia-general.html">
+<link rel="prev" href="analisis-de-datos-basico-con-la-shell.html">
+<link rel="next" href="otras-consideraciones-importantes.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -192,8 +192,41 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="obtencion-de-variantes" class="section level1">
-<h1><span class="header-section-number">9</span> Obtención de variantes</h1>
+<div id="shell-scripting" class="section level2">
+<h2><span class="header-section-number">1.10</span> Shell scripting</h2>
+<p>Los scripts no son más que unos archivos que combinan diferentes comandos y pipelines con el fin de automatizarlos. En su formato más simple consisten en una serie de comandos escritos en líneas de texto. Por ejemplo consideremos el siguiente script guardado en el archivo <code>hello.sh</code></p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/bin/bash</span>
+<span class="co"># comment</span>
+<span class="bu">echo</span> Hello World</code></pre></div>
+<p>La primera línea es de tipo especial y nos indica que shell debe usar (en este caso bash). La segunda línea, como va precedida de un “#” nos indica que es un comentario, no se va a ejecutar. Es muy importante comentar todos los pasos en un script. La tercera línea ya es un comando que se va a ejecutar.</p>
+<p>Para ejecutar el script primero le damos permiso de ejecución <code>chmod +x hello.sh</code> y luego lo podemos ejecutar llamándolo por su ruta relativa (o la completa):</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">./hello.sh</span></code></pre></div>
+<p>Ahora podemos escribir un script que automatize un análisis como el que hemos hecho antes para las features de <em>Crassotrea gigas</em> y guardarlo en un fichero oyster_features.sh</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/bin/bash</span>
+<span class="co"># script para el análisis de features del genoma de Crassostrea gigas</span>
+
+<span class="co">#Creamos un nuevo directorio para este análisis</span>
+<span class="bu">cd</span> ~/workdir
+<span class="fu">mkdir</span> oyster
+<span class="bu">cd</span> oyster
+
+<span class="co">#Obtención de los datos</span>
+<span class="fu">wget</span> -O oyster.gff.gz ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/297/895/GCF_000297895.1_oyster_v9/GCF_000297895.1_oyster_v9_genomic.gff.gz
+
+<span class="co">#Descomprimimos</span>
+<span class="fu">gunzip</span> oyster.gff.gz
+
+<span class="co">#Obtenemos la tabla de features</span>
+<span class="fu">cat</span> oyster.gff <span class="kw">|</span> <span class="fu">grep</span> -v -e <span class="st">&quot;^#&quot;</span> <span class="kw">|</span> <span class="fu">cut</span> -f3 <span class="kw">|</span>  <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> -c <span class="kw">|</span> <span class="fu">sort</span></code></pre></div>
+<p>Ahora podemos correr ese script, pero en vez de que nos muestre la tabla de features, que nos la guarde en un fichero llamado oyster_features.txt</p>
+<pre><code>cd ~/workdir
+chmod +x oyster_features.sh
+./oyster_features.sh &gt; oyster_features.txt</code></pre>
+<p>Ahora ya tenemos nuestro análisis básico totalmente automatizado en un script. Tiene la ventaja de que es fácilmente editable para hacer lo mismo con otros ficheros de datos.</p>
+
+<div class="exercise">
+<span id="exr:unnamed-chunk-20" class="exercise"><strong>Ejercicio 1.20  </strong></span>Modifica el script para hacer el mismo análisis en <em>Anguilla anguilla</em> (busca el gff en <a href="https://www.ncbi.nlm.nih.gov/genome/10841?genome_assembly_id=59496" class="uri">https://www.ncbi.nlm.nih.gov/genome/10841?genome_assembly_id=59496</a>). ¿Cual es el resultado?¿Qué ha podido pasar?
+</div>
 
 </div>
             </section>
@@ -201,8 +234,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-<a href="herramientas-para-el-alineamiento-y-deteccion-de-variantes-en-secuencias-genomicas.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="bibliografia-general.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="analisis-de-datos-basico-con-la-shell.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="otras-consideraciones-importantes.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

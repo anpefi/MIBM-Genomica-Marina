@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="herramientas-para-el-alineamiento-y-deteccion-de-variantes-en-secuencias-genomicas.html">
-<link rel="next" href="bibliografia-general.html">
+<link rel="prev" href="comandos-basicos.html">
+<link rel="next" href="pipelines.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -192,17 +192,21 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="obtencion-de-variantes" class="section level1">
-<h1><span class="header-section-number">9</span> Obtención de variantes</h1>
-
+<div id="descargar-contenido-online-con-wget" class="section level2">
+<h2><span class="header-section-number">1.6</span> Descargar contenido online con wget</h2>
+<p>Una tarea que repite en muchas ocasiones es la de descargar ficheros. Esto también se puede hacer desde línea de comandos con wget (u otros comandos como curl, ftp, sftp, rsync que pueden ser más adecuados en algunas ocasiones). Lo único que necesitamos es una URL del archivo a descargar (que se puede obtener con el navegador mediante click derecho y “copiar url”).</p>
+<p>Vamos a descargar un archivo con las anotaciones genómicas de <em>Crassotrea gigas</em> que podemos encontrar en el NCBI.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="bu">cd</span> ~/workdir <span class="co">#para asegurarnos que estamos en el directorio de trabajo</span>
+<span class="fu">wget</span> -O oyster.gff.gz ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/297/895/GCF_000297895.1_oyster_v9/GCF_000297895.1_oyster_v9_genomic.gff.gz
+<span class="fu">ls</span> -larth</code></pre></div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="herramientas-para-el-alineamiento-y-deteccion-de-variantes-en-secuencias-genomicas.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="bibliografia-general.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="comandos-basicos.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="pipelines.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

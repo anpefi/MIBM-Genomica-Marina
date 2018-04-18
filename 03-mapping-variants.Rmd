@@ -1,15 +1,84 @@
-# Mapeado
+# Formatos de archivo de mapeados y variantes
 
-## Formato SAM
+## Formato SAM/BAM
 
-## Formato BAM
+Un fichero SAM (Sequence Alignment/Map format) es un fichero de texto tabulado para la representación de alineamientos de secuencias contra un genoma o secuencia de referencia (mapeos). Está compuesto por una sección de cabecera (opcional) y una sección de alineamiento.
 
-## Mapear
+[Definición formato SAM/BAM](http://samtools.github.io/hts-specs/SAMv1.pdf)
 
-# Obtención de elementos genómicos
+- Sección de encabezado:
+    La sección del encabezado no es obligatoria, pero la mayoría de los softwares NGS lo requieren.
+    Cada línea de la sección de encabezado comienza con '@' y un código de tipo de registro de dos letras.
+    Contiene información sobre cinco temas principales:
+        - archivo de alineamiento: versión de formato, clasificación;
+        - secuencia(s) de referencia: p.e. nombre, longitud, especie, url;
+        - grupo de lectura: carril de secuenciación, muestra, centro de secuenciación, libreria, etc .;
+        - programa: nombre y versión del alineador, parámetros utilizados para la alineación;
+        - comentarios personalizados.
+    
+- Sección de alineamiento:
+    Cada lectura (read) en el alineamiento (y, a veces, lecturas no alineadas) está representada por una fila que consta de campos delimitados por tabulaciones (básicamente columnas).
+    Si una lectura se mapea a más de una ubicación, cada asignación tendrá su propia fila en el archivo sam.
+    Hay 11 campos obligatorios en cada fila (en las primeras 11 columnas):
+        - nombre de la lectura
+        - indicador (FLAG) bit a bit (codifica información sobre la lectura, por ejemplo, mapeada / no asignada, emparejada / no emparejada, mapeada hacia adelante / atrás, etc.) 
+        - nombre de la secuencia de referencia
+        - posición inicial de las lecturas mapeadas en la secuencia de referencia
+        - Calidad del alineamiento
+        - cadena CIGAR (esto es básicamente una breve descripción de la alineación)
+        - nombre de referencia para el *mate read* (para datos emparejados)
+        - posición del *mate read* (para datos emparejados)
+        - distancia entre lecturas emparejadas (para datos emparejados)
+        - secuencia de nucleótidos de la lectura
+        - calidad por base de la lectura
 
-# SAMtools y BEDtools
+```txt
+@HD VN:1.5 SO:coordinate
+@SQ SN:ref LN:45
+r001 99 ref 7 30 8M2I4M1D3M = 37 39 TTAGATAAAGGATACTG *
+r002 0 ref 9 30 3S6M1P1I4M * 0 0 AAAAGATAAGGATA *
+r003 0 ref 9 30 5S6M * 0 0 GCCTAAGCTAA * SA:Z:ref,29,-,6H5M,17,0;
+r004 0 ref 16 30 6M14N5M * 0 0 ATAGCTTCAGC *
+r003 2064 ref 29 17 6H5M * 0 0 TAGGC * SA:Z:ref,9,+,5S6M,30,1;
+r001 147 ref 37 30 9M = 7 -39 CAGCGGCAT * NM:i:1
+```
 
-# Herramientas para el alineamiento y detección de variantes en secuencias genómicas
 
-# Obtención de variantes
+El formato BAM contiene la misma información que los SAM pero comprimida en forma binaria y generalmente ordenada.
+
+
+
+## Formato gff
+
+Las anotaciones genómicas se guardan en ficheros gff.
+[Especificaciones](https://en.wikipedia.org/wiki/General_feature_format)
+
+## Archivos VCF
+
+Variant Calling Format. En este tipo de archivos, generados por *variant callers* se almacenan sólo las varaintes respecto al genoma de referencia.
+
+```text
+##fileformat=VCFv4.0
+##fileDate=20110705
+##reference=1000GenomesPilot-NCBI37
+##phasing=partial
+##INFO=<ID=NS,Number=1,Type=Integer,Description="Number of Samples With Data">
+##INFO=<ID=DP,Number=1,Type=Integer,Description="Total Depth">
+##INFO=<ID=AF,Number=.,Type=Float,Description="Allele Frequency">
+##INFO=<ID=AA,Number=1,Type=String,Description="Ancestral Allele">
+##INFO=<ID=DB,Number=0,Type=Flag,Description="dbSNP membership, build 129">
+##INFO=<ID=H2,Number=0,Type=Flag,Description="HapMap2 membership">
+##FILTER=<ID=q10,Description="Quality below 10">
+##FILTER=<ID=s50,Description="Less than 50% of samples have data">
+##FORMAT=<ID=GQ,Number=1,Type=Integer,Description="Genotype Quality">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##FORMAT=<ID=DP,Number=1,Type=Integer,Description="Read Depth">
+##FORMAT=<ID=HQ,Number=2,Type=Integer,Description="Haplotype Quality">
+#CHROM POS    ID        REF  ALT     QUAL FILTER INFO                              FORMAT      Sample1        Sample2        Sample3
+2      4370   rs6057    G    A       29   .      NS=2;DP=13;AF=0.5;DB;H2           GT:GQ:DP:HQ 0|0:48:1:52,51 1|0:48:8:51,51 1/1:43:5:.,.
+2      7330   .         T    A       3    q10    NS=5;DP=12;AF=0.017               GT:GQ:DP:HQ 0|0:46:3:58,50 0|1:3:5:65,3   0/0:41:3
+2      110696 rs6055    A    G,T     67   PASS   NS=2;DP=10;AF=0.333,0.667;AA=T;DB GT:GQ:DP:HQ 1|2:21:6:23,27 2|1:2:0:18,2   2/2:35:4
+2      130237 .         T    .       47   .      NS=2;DP=16;AA=T                   GT:GQ:DP:HQ 0|0:54:7:56,60 0|0:48:4:56,51 0/0:61:2
+2      134567 microsat1 GTCT G,GTACT 50   PASS   NS=2;DP=9;AA=G                    GT:GQ:DP    0/1:35:4       0/2:17:2       1/1:40:3
+```
+[Especificación VCF](http://vcftools.sourceforge.net/VCF-poster.pdf)

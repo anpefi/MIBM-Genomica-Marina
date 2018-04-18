@@ -30,6 +30,11 @@ Examina el archivo ~/data/example.fa ¿a qué tipo molécula corresponden las se
 ```
 
 <br>
+```{exercise}
+Descarga el archivo FASTA del genoma completo de la bacteria *Prochlococcus marinus* (ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/007/925/GCF_000007925.1_ASM792v1/GCF_000007925.1_ASM792v1_genomic.fna.gz) y obten el tamaño del genoma del mismo.
+```
+
+<br>
 Sin embargo la simplicidad del formato FASTA y la falta de reglas estrictas pueden ser un problema cuando se usan en diferentes programas, ya que estos podrían no gestionar bien archivos FASTA con secuencias muy largas, con alfabetos extendidos, con líneas de diferente tamaño o con diferencias entre mayúsculas y minúsculas. Es por ello que hay que leer bien la documentación del programa que usaremos para analizar nuestras secuencias FASTA.
 
 ## Formato FASTQ
@@ -86,12 +91,8 @@ Q	|			Error				|	Accuracy
 30	|			1	en	1000		|	99.9%
 40	|			1	en	10,000		|	99.99%
 
-# Procesado de lecturas NGS
-
 ## Evaluación de la calidad
 
-## Limpieza de lecturas
+[Guía sobre uso e interpretación de FastQC](https://aut.researchgateway.ac.nz/bitstream/handle/10292/5170/FASTQC%20analysis%20guide.pdf?sequence=5&isAllowed=y)
 
-# Ensamblaje genómico _de novo_
 
-## Evaluación del ensamblaje

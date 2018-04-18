@@ -1,4 +1,13 @@
-# Bibliografía general {-}
+# Bibliografía {-}
 
-# Evaluación {-}
+- [El Arte del Terminal](https://github.com/jlevy/the-art-of-command-line/blob/master/README-es.md)
 
+- [Data Science at the Command Line](https://www.datascienceatthecommandline.com/)
+
+- [The Biostar Handbook: A Beginner's Guide to Bioinformatics](https://www.biostarhandbook.com)
+
+- [Bash One-liners for Bioinformatics](https://github.com/stephenturner/oneliners)
+
+- [Linux Cheat Sheet](https://github.com/widdowquinn/Teaching-IBioIC-Intro-to-Bioinformatics/blob/ff2665f19822698f04d375e38964f92bcfdef202/linux_notes/1-LinuxCheatSheet.pdf)
+
+- [Command Line Tools for Genomic Data Science (curso online)](https://www.coursera.org/learn/genomic-tools/)

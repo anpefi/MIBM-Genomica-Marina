@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="cuales-son-los-conocimientos-minimos-que-deberia-adquirir-sobre-la-shell.html">
-<link rel="next" href="comandos-basicos.html">
+<link rel="prev" href="formato-sambam.html">
+<link rel="next" href="archivos-vcf.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -180,93 +180,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="consideraciones-sobre-los-sistemas-linuxunix" class="section level2">
-<h2><span class="header-section-number">1.4</span> Consideraciones sobre los sistemas Linux/Unix</h2>
-<div id="el-sistema-de-archivos" class="section level3">
-<h3><span class="header-section-number">1.4.1</span> El sistema de archivos</h3>
-<p>La estructura de directorios que sigue Linux es parecida a la de cualquier UNIX. No tenemos una “unidad” para cada unidad física de disco o partición como en Windows, sino que todos los discos duros o de red se montan bajo un sistema de directorios en árbol, y algunos de esos directorios enlazan con estas unidades físicas de disco. Básicamente, todo el contenido está organizado en ficheros dentro de un directorio, que a su ver puede ser parte de otro directorio superior, y así hasta que llegamos al directorio raiz (representado como <code>/</code>). En Unix, cada nivel de la jerarquia está separado por un /. Así, si encontramos que un archivo tiene la ruta /home/andres/archivo.txt significa que es un archivo llamado archivo.txt que está en el directorio andres que a su vez está en el directorio home que a su vez está en el directorio raíz (el / del principio). Eso es lo que se conoce como la ruta absoluta (<em>absolute path</em>). Por otra parte podemos referirnos a un archivo por su ruta relativa (<em>relative path</em>) al directorio actual. Imaginemos que estamos en el directorio /home, entonces podemos dar la ruta relativa al archivo anterior como andres/archivo.txt (Nota como no hay / al principio).</p>
-</div>
-<div id="directorios-estandar" class="section level3">
-<h3><span class="header-section-number">1.4.2</span> Directorios estándar</h3>
-<p>En los sistemas UNIX existe un ’Estándar de jerarquía de ficheros’ (FHS - Filesystem Hierarchy Standard) que intenta definir unas bases, para que tanto los programas del sistema, como los usuarios y administradores, sepan donde encontrar lo que buscan. A continuacion teneis una lista con los directorios mas importantes del sistema y para que se usan.</p>
-<dl>
-<dt>/bin</dt>
-<dd>Comandos/programas binarios esenciales (cp, mv, ls, rm, etc.).
-</dd>
-<dt>/boot</dt>
-<dd>Ficheros utilizados durante el arranque del sistema.
-</dd>
-<dt>/dev</dt>
-<dd>Dispositivos esenciales, discos duros, terminales, sonido, video, lectores dvd/cd, etc.
-</dd>
-<dt>/etc</dt>
-<dd>Ficheros de configuración utilizados en todo el sistema y que son específicos del ordenador.
-</dd>
-<dt>/home</dt>
-<dd>Directorios personales de inicio de los usuarios. Generalmente, como usuarios, sólo trabajaremos en nuestro directorio personal dentro de este /home
-</dd>
-<dt>/lib</dt>
-<dd>Bibliotecas compartidas esenciales para los binarios de /bin/, /sbin/ y el núcleo del sistema.
-</dd>
-<dt>/mnt</dt>
-<dd>Sistemas montados temporalmente
-</dd>
-<dt>/media</dt>
-<dd>Puntos de montaje para dispositivos de medios como unidades lectoras de discos compactos. {-}
-</dd>
-<dt>/opt</dt>
-<dd>Paquetes de aplicaciones estáticas. En el cluster, este directorio se encuentra montado sobre el head, para albergar una serie de aplicaciones de uso para todos los nodos.
-</dd>
-<dt>/proc</dt>
-<dd>Sistema de ficheros virtual que documenta sucesos y estados del núcleo.
-</dd>
-<dt>/root</dt>
-<dd>Directorio de inicio del usuario root (super-usuario).
-</dd>
-<dt>/sbin</dt>
-<dd>Comandos/programas binarios de administración de sistema.
-</dd>
-<dt>/tmp</dt>
-<dd>Ficheros temporales.
-</dd>
-<dt>/srv</dt>
-<dd>Datos específicos de sitio servidos por el sistema.
-</dd>
-<dt>/usr</dt>
-<dd>Jerarquía secundaria para datos compartidos de solo lectura (Unix system resources). Este directorio puede ser compartido por múltiples ordenadores y no debe contener datos específicos del ordenador que los comparte.
-</dd>
-<dt>/var</dt>
-<dd>Ficheros variables, como son logs, bases de datos, directorio raíz de servidores HTTP y FTP, colas de correo, ficheros temporales, etc.
-</dd>
-</dl>
-</div>
-<div id="nombres-de-archivos-en-linux" class="section level3">
-<h3><span class="header-section-number">1.4.3</span> Nombres de archivos en Linux</h3>
-<p>Los nombres de archivos en Linux (como en todos los UNIX) distinguen mayúsculas de minúsculas, esto es, son “case sensitive”. Los archivos README, readme, REadme y rEadme por ejemplo son archivos distintos y por lo tanto al ser nombres distintos pueden estar en el mismo directorio.</p>
-<p>En Linux los archivos no tienen por qué tener una extensión. La suelen tener a modo orientativo, pero no es en absoluto necesario. Linux sabe qué contiene cada archivo independientemente de cuál sea su extensión. Por comodidad, podremos llamar a todos nuestros archivos de texto con la extensión .texto, o a todos nuestros documentos con la extensión .documento, de esta manera, podremos luego agruparlos más fácilmente.</p>
-<p>Los ficheros y directorios ocultos en Linux comienzan su nombre por un punto (.)</p>
-<p>Los nombres de archivos o directorios pueden ser muy largos, de más de 200 caracteres, lo cual nos da bastante flexibilidad para asociar el nombre de un archivo a lo que contiene. No obstante, hay ciertos caracteres que nunca se deberían utilizar a la hora de nombrar un archivo. Uno de ellos es el espacio, nunca llamaremos a un fichero con un nombre que contenga un espacio. Tampoco son recomendados otros caracteres raros como signos de puntuación (a excepción del punto), acentos o la ñ. En algunos casos Linux ni siquiera nos permitirá usarlos. Los recomendables son las letras A-Z, a-z, los números (0-9), el punto, el guión (-) y el guión bajo (_) para nombrar un archivo. Los acentos y la ñ tampoco se recomiendan.</p>
-</div>
-<div id="permisos-de-archivos-y-directorios" class="section level3">
-<h3><span class="header-section-number">1.4.4</span> Permisos de archivos y directorios</h3>
-<p>En Linux, todo archivo y directorio (<em>nota: los directorios son, a efectos técnicos, un tipo especial de archivo</em>) tiene tres niveles de permisos de acceso: los que se aplican al propietario del archivo, los que se aplican al grupo que tiene el archivo y los que se aplican a todos los usuarios del sistema. Podemos ver los permisos cuando listamos un directorio con ls -l:</p>
-<pre><code>andres@head:~/curso$ ls -l
-total 212
--rwxr--r-- 1 andres users 46801 2009-10-29 16:26 a.out
--rw-r--r-- 1 andres users  1629 2009-10-29 16:26 poblacion.c
-drwxr-xr-x 2 andres users  4096 2010-10-02 18:30 prueba
--rwxr-xr-x 1 andres users 47740 2009-10-29 18:05 rec
--rw-r--r-- 1 andres users   711 2009-10-29 16:26 varianza.c</code></pre>
-<p>Veamos por partes el listado, tomando como ejemplo la primera línea. La primera columna (-rwxr-xr–) es el tipo de archivo y sus permisos, la siguiente columna (1) es el número de enlaces al archivo, la tercera columna (andres) representa al propietario del archivo, la cuarta columna (users) representa al grupo al que pertence al archivo y las siguientes son el tamaño, la fecha y hora de última modificación y por último el nombre delarchivo o directorio.</p>
-</div>
+<div id="formato-gff" class="section level2">
+<h2><span class="header-section-number">3.2</span> Formato gff</h2>
+<p>Las anotaciones genómicas se guardan en ficheros gff. <a href="https://en.wikipedia.org/wiki/General_feature_format">Especificaciones</a></p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="cuales-son-los-conocimientos-minimos-que-deberia-adquirir-sobre-la-shell.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="comandos-basicos.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="formato-sambam.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="archivos-vcf.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

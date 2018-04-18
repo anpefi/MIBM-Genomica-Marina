@@ -741,22 +741,11 @@ Hay una serie de temas y conceptos, que por motivos de tiempo no podemos hablar
 en profundidad en este curso, pero que suponen un conocimiento transversal importante
 para el día a día en el análisis bioinformático.
 
-- Otros comandos útiles (sed, cut, sort, uniq,
+- Otros comandos útiles (sed, awk, find, ...)
 - Expresiones regulares
 - Conexión a terminales remotas (ssh, sftp,...)
 - Gestión de trabajos en sistemas de colas (slurm, sge, ...)
-- Nociones de programación (bash, python, R, ...)
+- Nociones de programación (bash, python, perl, R, ...)
 - Reproducibilidad y comunicación (markdown, Jupyter)
 - Control de versiones (git)
 
-## Bibliografía
-
-- [El Arte del Terminal](https://github.com/jlevy/the-art-of-command-line/blob/master/README-es.md)
-
-- [Data Science at the Command Line](https://www.datascienceatthecommandline.com/)
-
-- [The Biostar Handbook: A Beginner's Guide to Bioinformatics](https://www.biostarhandbook.com)
-
-- [Bash One-liners for Bioinformatics](https://github.com/stephenturner/oneliners)
-
-- [Linux Cheat Sheet](https://github.com/widdowquinn/Teaching-IBioIC-Intro-to-Bioinformatics/blob/ff2665f19822698f04d375e38964f92bcfdef202/linux_notes/1-LinuxCheatSheet.pdf)

@@ -1,8 +1,8 @@
 ---
 title: "Introducción al análisis bioinformático de secuencias NGS"
-author: "Andrés Pérez-Figueroa"
+author: "Andrés Pérez-Figueroa (@anpefi)"
 date: "`r Sys.Date()`"
-description: "Guión de prácticas de la asignatura Genómica Marina del Máster Interuniversitario en Biología Marina"
+description: "Parte de la asignatura Genómica Marina del Máster Interuniversitario en Biología Marina"
 colorlinks: yes
 lot: yes
 lof: yes
@@ -36,8 +36,8 @@ Mac: https://docs.docker.com/docker-for-mac/install/
 Ejecutamos docker desde un directorio/carpeta local que utilizaremos para guardar los resultados que obtengamos.
 
 ```bash
-docker run -ti -v $PWD:/home/user/workdir anpefi/genomica-marina
+docker run -ti -v $PWD:/home/user/workdir anpefi/genomica-marina:0.2
 ```
 
 en Windows sustituimos $PWD por la ruta completa de la carpeta que queremos usar 
-como directorio local (p.e. C:\Users\curso)
+como directorio local 
